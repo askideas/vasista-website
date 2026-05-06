@@ -4,7 +4,7 @@ import {
   Search, MapPin, Grid, Bell, MessageSquare, Bookmark,
   ChevronDown, MapPin as Pin, Briefcase, Clock, User,
   Home, FileText, MessageCircle, Star, ToggleLeft, ToggleRight,
-  ArrowRight, CheckCircle, Circle, ChevronRight, Menu, X
+  ArrowRight, CheckCircle, Circle, ChevronRight, Menu, X, Users
 } from 'lucide-react';
 import './HomePage.css';
 import logo from '../assets/logo-vasista.png';
@@ -150,6 +150,7 @@ const HomePage = () => {
                     e.preventDefault();
                     if (item === 'Jobs') navigate('/jobs');
                     if (item === 'Companies') navigate('/companies');
+                    if (item === 'Candidates') navigate('/candidates');
                   }}
                 >
                   {item === 'Home' && <Home size={15} />}
@@ -453,7 +454,7 @@ const HomePage = () => {
             { key: 'home',         label: 'Home',         icon: Home,      path: '/home' },
             { key: 'jobs',         label: 'Jobs',         icon: Briefcase, path: '/jobs' },
             { key: 'companies',    label: 'Companies',    icon: Grid,      path: '/companies' },
-            { key: 'applications', label: 'Applications', icon: FileText,  path: null },
+            { key: 'candidates',   label: 'Candidates',   icon: Users,     path: '/candidates' },
             { key: 'profile',      label: 'Profile',      icon: User,      path: '/profile' },
           ].map(item => (
             <button

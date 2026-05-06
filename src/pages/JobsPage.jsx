@@ -4,7 +4,7 @@ import {
   Search, MapPin, SlidersHorizontal, Bell, MessageSquare,
   Bookmark, Briefcase, Clock, ChevronDown, ChevronUp,
   Home, FileText, User, Grid,
-  ArrowRight, ChevronLeft, ChevronRight, Star, Menu, X, Filter
+  ArrowRight, ChevronLeft, ChevronRight, Star, Menu, X, Filter, Users
 } from 'lucide-react';
 import './JobsPage.css';
 import logo from '../assets/logo-vasista.png';
@@ -67,7 +67,7 @@ const NAV_ITEMS = [
   { key: 'home',         label: 'Home',         icon: Home,      path: '/home' },
   { key: 'jobs',         label: 'Jobs',         icon: Briefcase, path: '/jobs' },
   { key: 'companies',    label: 'Companies',    icon: Grid,      path: '/companies' },
-  { key: 'applications', label: 'Applications', icon: FileText,  path: null },
+  { key: 'candidates', label: 'Candidates', icon: Users,     path: '/candidates' },
   { key: 'profile',      label: 'Profile',      icon: User,      path: '/profile' },
 ];
 
@@ -275,7 +275,7 @@ const JobsPage = () => {
                 { label: 'Home', icon: Home, path: '/home' },
                 { label: 'Jobs', icon: Briefcase, path: '/jobs' },
                 { label: 'Companies', icon: Grid, path: '/companies' },
-                { label: 'Candidates', icon: User, path: '#' },
+                { label: 'Candidates', icon: User, path: '/candidates' },
                 { label: 'My Applications', icon: FileText, path: '#' },
               ].map(item => (
                 <a key={item.label} href={item.path}

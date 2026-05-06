@@ -5,7 +5,7 @@ import {
   Bell, MessageSquare, ChevronDown, Eye, Pencil,
   Plus, Download, ExternalLink, CheckCircle, Building2,
   GraduationCap, Globe, GitBranch, ChevronRight,
-  Menu, MoreVertical
+  Menu, MoreVertical, Users
 } from 'lucide-react';
 import './ProfilePage.css';
 import logo from '../assets/logo-vasista.png';
@@ -51,7 +51,7 @@ const NAV_ITEMS = [
   { key: 'home',         label: 'Home',         icon: Home,      path: '/home' },
   { key: 'jobs',         label: 'Jobs',         icon: Briefcase, path: '/jobs' },
   { key: 'companies',    label: 'Companies',    icon: Building2, path: '/companies' },
-  { key: 'applications', label: 'Applications', icon: FileText,  path: null },
+  { key: 'candidates', label: 'Candidates', icon: Users,     path: '/candidates' },
   { key: 'profile',      label: 'Profile',      icon: User,      path: '/profile' },
 ];
 
@@ -115,7 +115,7 @@ const ProfilePage = () => {
                 { label: 'Home',           icon: Home,     path: '/home' },
                 { label: 'Jobs',           icon: Briefcase,path: '/jobs' },
                 { label: 'Companies',      icon: Grid,     path: '/companies' },
-                { label: 'Candidates',     icon: User,     path: '#' },
+                { label: 'Candidates',     icon: User,     path: '/candidates' },
                 { label: 'My Applications',icon: FileText, path: '#' },
               ].map(item => (
                 <a
