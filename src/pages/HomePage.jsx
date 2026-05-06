@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import './HomePage.css';
 import logo from '../assets/logo-vasista.png';
-
+import BottomNav from '../components/BottomNav';
 /* ─── DATA ──────────────────────────────────────────────── */
 const JOBS = [
   {
@@ -449,24 +449,7 @@ const HomePage = () => {
         </div>
 
         {/* Bottom Navigation */}
-        <nav className="hp-mob-nav">
-          {[
-            { key: 'home',         label: 'Home',         icon: Home,      path: '/home' },
-            { key: 'jobs',         label: 'Jobs',         icon: Briefcase, path: '/jobs' },
-            { key: 'companies',    label: 'Companies',    icon: Grid,      path: '/companies' },
-            { key: 'candidates',   label: 'Candidates',   icon: Users,     path: '/candidates' },
-            { key: 'profile',      label: 'Profile',      icon: User,      path: '/profile' },
-          ].map(item => (
-            <button
-              key={item.key}
-              className={`hp-mob-nav-btn ${activeNav === item.key ? 'active' : ''}`}
-              onClick={() => { setActiveNav(item.key); if (item.path) navigate(item.path); }}
-            >
-              <item.icon size={20} />
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </nav>
+        <BottomNav activeTab="home" />
       </div>
     </div>
   );

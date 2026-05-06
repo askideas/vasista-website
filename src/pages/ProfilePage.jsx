@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import './ProfilePage.css';
 import logo from '../assets/logo-vasista.png';
-
+import BottomNav from '../components/BottomNav';
 /* ─── DATA ──────────────────────────────────────────── */
 const SKILLS = ['JavaScript', 'React.js', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'MongoDB', 'Express.js', 'Git', 'AWS'];
 
@@ -410,19 +410,7 @@ const ProfilePage = () => {
           <div style={{ height: '80px' }} />
         </div>
 
-        {/* Bottom Nav */}
-        <nav className="pp-mob-nav">
-          {NAV_ITEMS.map(item => (
-            <button
-              key={item.key}
-              className={`pp-mob-nav-btn ${activeNav === item.key ? 'active' : ''}`}
-              onClick={() => { setActiveNav(item.key); if (item.path) navigate(item.path); }}
-            >
-              <item.icon size={20} />
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </nav>
+        <BottomNav activeTab="profile" />
       </div>
     </div>
   );

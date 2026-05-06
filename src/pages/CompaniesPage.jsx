@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import './CompaniesPage.css';
 import logo from '../assets/logo-vasista.png';
-
+import BottomNav from '../components/BottomNav';
 /* ─── DATA ──────────────────────────────────────────── */
 const TOP_COMPANIES = [
   { id: 1, abbr: 'TATA',    name: 'Tata Consultancy\nServices',  color: '#1d3557' },
@@ -391,19 +391,7 @@ const CompaniesPage = () => {
           <div style={{ height: '80px' }} />
         </div>
 
-        {/* Bottom Nav */}
-        <nav className="cp-mob-nav">
-          {NAV_ITEMS.map(item => (
-            <button
-              key={item.key}
-              className={`cp-mob-nav-btn ${activeNav === item.key ? 'active' : ''}`}
-              onClick={() => { setActiveNav(item.key); if (item.path) navigate(item.path); }}
-            >
-              <item.icon size={20} />
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </nav>
+        <BottomNav activeTab="companies" />
       </div>
     </div>
   );

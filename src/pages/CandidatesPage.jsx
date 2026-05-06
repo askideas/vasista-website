@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import './CandidatesPage.css';
 import logo from '../assets/logo-vasista.png';
-
+import BottomNav from '../components/BottomNav';
 /* ─── DATA ─────────────────────────────────────────── */
 const CANDIDATES = [
   {
@@ -625,19 +625,7 @@ const CandidatesPage = () => {
           <div style={{ height: '80px' }} />
         </div>
 
-        {/* Bottom Nav */}
-        <nav className="cdp-mob-nav">
-          {NAV_ITEMS.map(item => (
-            <button
-              key={item.key}
-              className={`cdp-mob-nav-btn ${activeNav === item.key ? 'active' : ''}`}
-              onClick={() => { setActiveNav(item.key); if (item.path !== '#') navigate(item.path); }}
-            >
-              <item.icon size={20} />
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </nav>
+        <BottomNav activeTab="candidates" />
 
         {/* Mobile Filter Drawer */}
         {showMobileFilter && (
