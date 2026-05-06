@@ -15,6 +15,14 @@ const LoginPage = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [timer, setTimer] = useState(90);
   const [timerActive, setTimerActive] = useState(false);
+  const [roleTab, setRoleTab] = useState('candidate'); // 'candidate' | 'business'
+
+  const handleTabSwitch = (tab) => {
+    setRoleTab(tab);
+    setStep(1);
+    setPhone('');
+    setOtp(['', '', '', '', '', '']);
+  };
 
   // ── Desktop OTP refs ──
   const d0 = useRef(null), d1 = useRef(null), d2 = useRef(null);
@@ -185,11 +193,34 @@ const LoginPage = () => {
               className="lp-form-card"
               style={{ display: step === 1 ? 'flex' : 'none' }}
             >
+              {/* ── Role Tab Switcher ── */}
+              <div className="lp-tab-switch">
+                <button
+                  className={`lp-tab ${roleTab === 'candidate' ? 'active' : ''}`}
+                  onClick={() => handleTabSwitch('candidate')}
+                >
+                  <User size={15} /> Candidate
+                </button>
+                <button
+                  className={`lp-tab ${roleTab === 'business' ? 'active' : ''}`}
+                  onClick={() => handleTabSwitch('business')}
+                >
+                  <Handshake size={15} /> Business Owner
+                </button>
+                <div className={`lp-tab-indicator ${roleTab === 'business' ? 'right' : ''}`} />
+              </div>
+
               <div className="lp-form-heading">
                 <div className="lp-icon-circle"><Smartphone size={20} /></div>
                 <div>
-                  <h2 className="lp-form-title">Login with Mobile Number</h2>
-                  <p className="lp-form-sub">We will send you a verification code to your mobile number</p>
+                  <h2 className="lp-form-title">
+                    {roleTab === 'candidate' ? 'Candidate Login' : 'Business Owner Login'}
+                  </h2>
+                  <p className="lp-form-sub">
+                    {roleTab === 'candidate'
+                      ? 'Find the right job with Vasista'
+                      : 'Hire the right talent with Vasista'}
+                  </p>
                 </div>
               </div>
 
@@ -302,11 +333,34 @@ const LoginPage = () => {
             <h2 className="lp-mob-welcome">Welcome to Vasista</h2>
             <p className="lp-mob-wsub">Your trusted partner in manpower solutions.</p>
 
+            {/* ── Role Tab Switcher (mobile) ── */}
+            <div className="lp-tab-switch">
+              <button
+                className={`lp-tab ${roleTab === 'candidate' ? 'active' : ''}`}
+                onClick={() => handleTabSwitch('candidate')}
+              >
+                <User size={14} /> Candidate
+              </button>
+              <button
+                className={`lp-tab ${roleTab === 'business' ? 'active' : ''}`}
+                onClick={() => handleTabSwitch('business')}
+              >
+                <Handshake size={14} /> Business Owner
+              </button>
+              <div className={`lp-tab-indicator ${roleTab === 'business' ? 'right' : ''}`} />
+            </div>
+
             <div className="lp-mob-login-label">
               <div className="lp-mob-phone-icon"><Smartphone size={18} /></div>
               <div>
-                <p className="lp-mob-ll-title">Login with Mobile Number</p>
-                <p className="lp-mob-ll-sub">We will send you a verification code</p>
+                <p className="lp-mob-ll-title">
+                  {roleTab === 'candidate' ? 'Candidate Login' : 'Business Owner Login'}
+                </p>
+                <p className="lp-mob-ll-sub">
+                  {roleTab === 'candidate'
+                    ? 'Find the right job with Vasista'
+                    : 'Hire the right talent with Vasista'}
+                </p>
               </div>
             </div>
 
