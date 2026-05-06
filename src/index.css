@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #001f3f;
+  --secondary: #ff8c00;
+  --accent: #f29727;
+  --text-dark: #0a1931;
+  --text-muted: #4a5568;
+  --bg-light: #f7fafc;
+  --white: #ffffff;
+  --navy: #002B5B;
+  --orange-gradient: linear-gradient(135deg, #ff8c00 0%, #f29727 100%);
+  --navy-gradient: linear-gradient(135deg, #001f3f 0%, #002B5B 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Sora', sans-serif;
+}
+
+body {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
