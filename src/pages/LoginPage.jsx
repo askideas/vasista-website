@@ -16,12 +16,15 @@ const LoginPage = () => {
   const [timer, setTimer] = useState(90);
   const [timerActive, setTimerActive] = useState(false);
   const [roleTab, setRoleTab] = useState('candidate'); // 'candidate' | 'business'
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleTabSwitch = (tab) => {
     setRoleTab(tab);
     setStep(1);
     setPhone('');
     setOtp(['', '', '', '', '', '']);
+    setErrorMsg('');
   };
 
   // ── Desktop OTP refs ──
@@ -98,24 +101,88 @@ const LoginPage = () => {
     refs[lastFilled].current?.focus();
   };
 
-  const sendOtp = () => {
+  const sendOtp = async () => {
     if (phone.length < 10 || !agreed) return;
-    setOtp(['', '', '', '', '', '']);
-    setStep(2);
-    setTimer(90);
-    setTimerActive(true);
+    setLoading(true);
+    setErrorMsg('');
+    try {
+      const formattedPhone = phone.startsWith('+91') ? phone : `+91${phone}`;
+      const res = await fetch('http://localhost:3000/api/auth/otp/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phoneNumber: formattedPhone, role: roleTab })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to send OTP');
+      
+      setOtp(['', '', '', '', '', '']);
+      setStep(2);
+      setTimer(90);
+      setTimerActive(true);
+    } catch (err) {
+      setErrorMsg(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const resendOtp = () => {
-    setOtp(['', '', '', '', '', '']);
-    setTimer(90);
-    requestAnimationFrame(() => {
-      if (window.innerWidth > 768) d0.current?.focus();
-      else m0.current?.focus();
-    });
+  const resendOtp = async () => {
+    if (timer > 0) return;
+    setLoading(true);
+    setErrorMsg('');
+    try {
+      const formattedPhone = phone.startsWith('+91') ? phone : `+91${phone}`;
+      const res = await fetch('http://localhost:3000/api/auth/otp/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phoneNumber: formattedPhone, role: roleTab })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to resend OTP');
+
+      setOtp(['', '', '', '', '', '']);
+      setTimer(90);
+      requestAnimationFrame(() => {
+        if (window.innerWidth > 768) d0.current?.focus();
+        else m0.current?.focus();
+      });
+    } catch (err) {
+      setErrorMsg(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const verifyOtp = () => navigate('/home');
+  const verifyOtp = async () => {
+    const code = otp.join('');
+    if (code.length < 6) return;
+    
+    setLoading(true);
+    setErrorMsg('');
+    try {
+      const formattedPhone = phone.startsWith('+91') ? phone : `+91${phone}`;
+      const res = await fetch('http://localhost:3000/api/auth/otp/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phoneNumber: formattedPhone, code, role: roleTab })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Invalid OTP');
+      
+      // Store session and user data
+      localStorage.setItem('sessionToken', data.sessionToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+      localStorage.setItem('userRole', data.role);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('isNewUser', data.isNewUser);
+
+      navigate('/profile');
+    } catch (err) {
+      setErrorMsg(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   /* ════════════════════════════════════════
      RENDER
@@ -246,12 +313,16 @@ const LoginPage = () => {
                 <span>I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a></span>
               </label>
 
+              {errorMsg && <p style={{ color: '#d32f2f', fontSize: '13px', marginTop: '10px', textAlign: 'center' }}>{errorMsg}</p>}
+
               <button
-                className={`lp-primary-btn ${!agreed || phone.length < 10 ? 'disabled' : ''}`}
+                className={`lp-primary-btn ${!agreed || phone.length < 10 || loading ? 'disabled' : ''}`}
                 onClick={sendOtp}
-                disabled={!agreed || phone.length < 10}
+                disabled={!agreed || phone.length < 10 || loading}
               >
-                Send OTP <ArrowRight size={18} strokeWidth={2.5} />
+                {loading ? 'Sending...' : (
+                  <>Send OTP <ArrowRight size={18} strokeWidth={2.5} /></>
+                )}
               </button>
 
               {/* <div className="lp-or"><span>OR</span></div>
@@ -296,7 +367,15 @@ const LoginPage = () => {
                 OTP expires in <span className="lp-timer-val">{fmt(timer)}</span>
               </div>
 
-              <button className="lp-primary-btn" onClick={verifyOtp}>Verify OTP</button>
+              {errorMsg && <p style={{ color: '#d32f2f', fontSize: '13px', marginTop: '10px', textAlign: 'center' }}>{errorMsg}</p>}
+
+              <button 
+                className={`lp-primary-btn ${loading ? 'disabled' : ''}`} 
+                onClick={verifyOtp}
+                disabled={loading}
+              >
+                {loading ? 'Verifying...' : 'Verify OTP'}
+              </button>
 
               <p className="lp-resend">
                 Didn't receive OTP?{' '}
@@ -385,12 +464,16 @@ const LoginPage = () => {
               <span>I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a></span>
             </label>
 
+            {errorMsg && <p style={{ color: '#d32f2f', fontSize: '13px', marginTop: '10px', textAlign: 'center' }}>{errorMsg}</p>}
+
             <button
-              className={`lp-primary-btn ${!agreed || phone.length < 10 ? 'disabled' : ''}`}
+              className={`lp-primary-btn ${!agreed || phone.length < 10 || loading ? 'disabled' : ''}`}
               onClick={sendOtp}
-              disabled={!agreed || phone.length < 10}
+              disabled={!agreed || phone.length < 10 || loading}
             >
-              Send OTP <ArrowRight size={18} strokeWidth={2.5} />
+              {loading ? 'Sending...' : (
+                <>Send OTP <ArrowRight size={18} strokeWidth={2.5} /></>
+              )}
             </button>
 
             {/* <div className="lp-or"><span>OR</span></div>
@@ -431,7 +514,15 @@ const LoginPage = () => {
               OTP expires in <span className="lp-timer-val">{fmt(timer)}</span>
             </div>
 
-            <button className="lp-primary-btn" onClick={verifyOtp}>Verify OTP</button>
+            {errorMsg && <p style={{ color: '#d32f2f', fontSize: '13px', marginTop: '10px', textAlign: 'center' }}>{errorMsg}</p>}
+
+            <button 
+              className={`lp-primary-btn ${loading ? 'disabled' : ''}`} 
+              onClick={verifyOtp}
+              disabled={loading}
+            >
+              {loading ? 'Verifying...' : 'Verify OTP'}
+            </button>
 
             <p className="lp-resend">
               Didn't receive OTP?{' '}

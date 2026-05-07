@@ -11,12 +11,13 @@ const NAV_ITEMS = [
   { key: 'profile',    label: 'Profile',    icon: User,      path: '/profile' },
 ];
 
-const BottomNav = ({ activeTab }) => {
+const BottomNav = ({ activeTab, items, onTabClick }) => {
   const navigate = useNavigate();
+  const navItems = items || NAV_ITEMS;
 
   return (
     <nav className="global-bottom-nav">
-      {NAV_ITEMS.map((item) => {
+      {navItems.map((item) => {
         const Icon = item.icon;
         const isActive = activeTab === item.key;
         return (
@@ -24,7 +25,9 @@ const BottomNav = ({ activeTab }) => {
             key={item.key}
             className={`global-bottom-nav-btn ${isActive ? 'active' : ''}`}
             onClick={() => {
-              if (item.path && item.path !== '#') {
+              if (onTabClick) {
+                onTabClick(item.key);
+              } else if (item.path && item.path !== '#') {
                 navigate(item.path);
               }
             }}

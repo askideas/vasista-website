@@ -95,8 +95,37 @@
   font-size: 1.6rem; font-weight: 800; color: #fff;
   display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
 }
-.pp-verified { color: #f29727; }
 .pp-hero-title { font-size: 0.92rem; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+
+.pp-verified-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(5,150,105,0.15); color: #10b981;
+  padding: 4px 10px; border-radius: 20px;
+  font-size: 0.75rem; font-weight: 700;
+  border: 1px solid rgba(16,185,129,0.3);
+}
+
+.pp-pending-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,0.15); color: #f59e0b;
+  padding: 4px 10px; border-radius: 20px;
+  font-size: 0.75rem; font-weight: 700;
+  border: 1px solid rgba(245,158,11,0.3);
+}
+.pp-status-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: capitalize; margin-left: 8px;
+}
+.pp-status-badge.open-to-work {
+  background: rgba(34, 197, 94, 0.15); color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+.pp-status-badge.allotted {
+  background: rgba(59, 130, 246, 0.15); color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
 .pp-hero-location {
   display: flex; align-items: center; gap: 4px;
   font-size: 0.82rem; color: rgba(255,255,255,0.7);
@@ -125,7 +154,70 @@
 .pp-stat-val { font-size: 1.4rem; font-weight: 800; color: #fff; line-height: 1; }
 .pp-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.65); }
 
+/* ─── Header Tabs ─── */
+.pp-nav-divider {
+  width: 1.5px; height: 24px;
+  background: rgba(255,255,255,0.2);
+  margin: 0 12px;
+}
+.pp-tab-nav {
+  background: none; border: none; padding: 8px 16px;
+  font-size: 0.82rem; font-weight: 700; color: #64748b;
+  cursor: pointer; position: relative; font-family: 'Sora', sans-serif;
+  transition: all 0.2s; border-radius: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.pp-tab-nav:hover { color: #001f3f; background: #f0f4f8; }
+.pp-tab-nav.active { color: #f29727; }
+.pp-tab-nav-bg {
+  position: absolute; inset: 0;
+  background: rgba(242, 151, 39, 0.08); border-radius: 8px;
+  z-index: 0; border: 1px solid rgba(242, 151, 39, 0.3);
+}
+.pp-tab-nav-content {
+  position: relative; z-index: 1; display: flex; align-items: center; gap: 6px;
+}
+
 /* ─── Main 2-column grid ─── */
+.pp-tabs-container {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 28px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.pp-tabs-inner {
+  display: flex; gap: 8px; padding: 12px 0;
+}
+.pp-tab {
+  background: none; border: none; padding: 10px 18px;
+  font-size: 0.88rem; font-weight: 700; color: #64748b;
+  cursor: pointer; position: relative; font-family: 'Sora', sans-serif;
+  transition: all 0.2s; border-radius: 10px;
+  display: flex; align-items: center; justify-content: flex-start;
+}
+.pp-tab:hover { color: #f29727; }
+.pp-tab.active { color: #f29727; }
+.pp-tab-bg {
+  position: absolute; inset: 0;
+  background: rgba(242, 151, 39, 0.08); border-radius: 10px;
+  z-index: 0; border-bottom: 3px solid #f29727;
+}
+
+.pp-docs-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+.pp-doc-item {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.pp-doc-label {
+  font-size: 0.85rem; font-weight: 700; color: #334155;
+}
+.pp-doc-img {
+  width: 100%; aspect-ratio: 4/3;
+  background-color: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 8px; background-size: contain;
+  background-position: center; background-repeat: no-repeat;
+}
+
 .pp-main-grid {
   max-width: 1280px; margin: 0 auto;
   display: grid; grid-template-columns: 1fr 380px;
@@ -336,6 +428,35 @@
 .pp-mob-stat-label { font-size: 0.6rem; color: rgba(255,255,255,0.6); text-align: center; }
 
 /* Profile completeness */
+.pp-mob-tabs-wrapper {
+  background: #fff; border-bottom: 1px solid #e2e8f0;
+  padding: 8px 16px; margin-bottom: 10px;
+  display: flex; justify-content: flex-start;
+  overflow-x: auto;
+}
+.pp-mob-tabs-inner {
+  display: flex; gap: 4px;
+  width: max-content;
+}
+.pp-mob-tab {
+  background: none; border: none; padding: 10px 16px;
+  font-size: 0.82rem; font-weight: 700; color: #64748b;
+  cursor: pointer; position: relative; font-family: 'Sora', sans-serif;
+  border-radius: 10px; transition: all 0.2s;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: flex-start;
+}
+.pp-mob-tab.active { color: #f29727; }
+.pp-mob-tab-bg {
+  position: absolute; inset: 0;
+  background: rgba(242, 151, 39, 0.08); border-radius: 10px;
+  z-index: 0; border-bottom: 3px solid #f29727;
+}
+
+.pp-docs-grid.mob {
+  grid-template-columns: 1fr;
+}
+
 .pp-mob-complete {
   background: #fff; margin: 12px 14px 0;
   border-radius: 14px; padding: 14px 16px;

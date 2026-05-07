@@ -2,23 +2,31 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-import JobsPage from './pages/JobsPage';
-import CompaniesPage from './pages/CompaniesPage';
 import ProfilePage from './pages/ProfilePage';
-import CandidatesPage from './pages/CandidatesPage';
+
+const AuthGuard = ({ children }) => {
+  const token = localStorage.getItem('sessionToken');
+  if (!token) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
+
+const GuestGuard = ({ children }) => {
+  const token = localStorage.getItem('sessionToken');
+  if (token) {
+    return <Navigate to="/profile" replace />;
+  }
+  return children;
+};
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<WelcomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/jobs" element={<JobsPage />} />
-        <Route path="/companies" element={<CompaniesPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/candidates" element={<CandidatesPage />} />
+        <Route path="/" element={<GuestGuard><WelcomePage /></GuestGuard>} />
+        <Route path="/login" element={<GuestGuard><LoginPage /></GuestGuard>} />
+        <Route path="/profile" element={<AuthGuard><ProfilePage /></AuthGuard>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
