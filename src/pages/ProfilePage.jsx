@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  MapPin, Briefcase, FileText, User, Home, Grid,
-  Bell, MessageSquare, ChevronDown, Eye, Pencil,
-  Plus, Download, ExternalLink, CheckCircle, Building2,
-  GraduationCap, Globe, GitBranch, ChevronRight,
-  Menu, MoreVertical, Users, Clock
+import { 
+  User, Mail, Phone, MapPin, Briefcase, Calendar, 
+  ChevronRight, Pencil, Eye, CheckCircle, Clock, 
+  Menu, Bell, Settings, Award, ShieldCheck, 
+  Activity, Users, Smartphone, Fingerprint,
+  Home, FileText, Grid, ChevronDown, Plus, Download, 
+  ExternalLink, Building2, GraduationCap, Globe, 
+  GitBranch, MoreVertical, MessageSquare
 } from 'lucide-react';
 import './ProfilePage.css';
 import logo from '../assets/logo-vasista.png';
@@ -324,60 +326,75 @@ const ProfilePage = () => {
 
                 {/* Personal Information (Basic Info) */}
                 <SectionCard title="Personal Information" actionLabel="Edit" action={() => { }}>
-                  <div className="pp-info-grid">
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Current Status</span>
-                      <span className={`pp-info-val ${userData?.candidateStatus === 'Open to work' ? 'status-open' : ''}`}>{userData?.candidateStatus || 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">KYC Status</span>
-                      <span className={`pp-info-val ${userData?.kycStatus === 'Verified' ? 'status-verified' : 'status-pending'}`}>{userData?.kycStatus || 'Pending'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Guardian Name</span>
-                      <span className="pp-info-val">{userData?.guardians?.[0]?.name || 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Guardian Relation</span>
-                      <span className="pp-info-val">{userData?.guardians?.[0]?.relation || 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Guardian Phone</span>
-                      <span className="pp-info-val">{userData?.guardians?.[0]?.phone || 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Date of Birth</span>
-                      <span className="pp-info-val">{userData?.dob || 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Mobile Number</span>
-                      <span className="pp-info-val">{userData?.phone || userData?.phoneNumber || 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Email ID</span>
-                      <span className="pp-info-val" style={{ wordBreak: 'break-all' }}>{userData?.email || 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Location</span>
-                      <span className="pp-info-val">{userData?.city && userData?.state ? `${userData.city}, ${userData.state}` : 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Address</span>
-                      <span className="pp-info-val">{userData?.address || 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Qualification</span>
-                      <span className="pp-info-val">{userData?.qualification || 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">Total Experience</span>
-                      <span className="pp-info-val">{userData?.experience ? `${userData.experience} Years` : 'Not Specified'}</span>
-                    </div>
-                    <div className="pp-info-item">
-                      <span className="pp-info-label">KYC (Aadhar Number)</span>
-                      <span className="pp-info-val">{userData?.aadharNumber || 'Not Specified'}</span>
-                    </div>
+                <div className="pp-info-grid">
+                  {/* Verification Status */}
+                  <div className="pp-info-item full">
+                    <div className="pp-info-group-title">Verification & Status</div>
                   </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><Activity size={12} /> Current Status</span>
+                    <span className={`pp-info-val ${userData?.candidateStatus === 'Open to work' ? 'status-open' : ''}`}>{userData?.candidateStatus || 'Not Specified'}</span>
+                  </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><ShieldCheck size={12} /> KYC Status</span>
+                    <span className={`pp-info-val ${userData?.kycStatus === 'Verified' ? 'status-verified' : 'status-pending'}`}>{userData?.kycStatus || 'Pending'}</span>
+                  </div>
+
+                  {/* Guardian Info */}
+                  <div className="pp-info-item full">
+                    <div className="pp-info-group-title">Guardian Information</div>
+                  </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><User size={12} /> Name</span>
+                    <span className="pp-info-val">{userData?.guardians?.[0]?.name || 'Not Specified'}</span>
+                  </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><Users size={12} /> Relation</span>
+                    <span className="pp-info-val">{userData?.guardians?.[0]?.relation || 'Not Specified'}</span>
+                  </div>
+                  <div className="pp-info-item full">
+                    <span className="pp-info-label"><Phone size={12} /> Guardian Phone</span>
+                    <span className="pp-info-val">{userData?.guardians?.[0]?.phone || 'Not Specified'}</span>
+                  </div>
+
+                  {/* Contact Info */}
+                  <div className="pp-info-item full">
+                    <div className="pp-info-group-title">Contact & Location</div>
+                  </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><Smartphone size={12} /> Mobile</span>
+                    <span className="pp-info-val">{userData?.phone || userData?.phoneNumber || 'Not Specified'}</span>
+                  </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><Mail size={12} /> Email</span>
+                    <span className="pp-info-val" style={{ wordBreak: 'break-all' }}>{userData?.email || 'Not Specified'}</span>
+                  </div>
+                  <div className="pp-info-item full">
+                    <span className="pp-info-label"><MapPin size={12} /> Address</span>
+                    <span className="pp-info-val">{userData?.address ? `${userData.address}, ${userData.city}, ${userData.state}` : 'Not Specified'}</span>
+                  </div>
+
+                  {/* Others */}
+                  <div className="pp-info-item full">
+                    <div className="pp-info-group-title">Other Details</div>
+                  </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><Calendar size={12} /> Date of Birth</span>
+                    <span className="pp-info-val">{userData?.dob || 'Not Specified'}</span>
+                  </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><Award size={12} /> Qualification</span>
+                    <span className="pp-info-val">{userData?.qualification || 'Not Specified'}</span>
+                  </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><Briefcase size={12} /> Experience</span>
+                    <span className="pp-info-val">{userData?.experience ? `${userData.experience} Years` : 'Not Specified'}</span>
+                  </div>
+                  <div className="pp-info-item">
+                    <span className="pp-info-label"><Fingerprint size={12} /> Aadhar Number</span>
+                    <span className="pp-info-val">{userData?.aadharNumber || 'Not Specified'}</span>
+                  </div>
+                </div>
                 </SectionCard>
               </div>
             </div>
